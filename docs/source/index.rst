@@ -6,8 +6,9 @@
 Welcome to ForteModel's documentation!
 ======================================
 
-**ForteModel** is a repository for Geant4 Application fot Tomographic Emission 
-(GATE) simulation scripts for Phillips/ADAC Forte dual headed positron camera.
+**ForteModel** is a repository for simulation scripts created with the Geant4 
+Application for Tomographic Emission (GATE) to be used with a model of the
+Phillips/ADAC Forte dual headed positron camera.
 
 GATE is a Monte Carlo radiation transport and detector simulation software. A 
 model of Forte detectior has been created using GATE and validated by experiments
