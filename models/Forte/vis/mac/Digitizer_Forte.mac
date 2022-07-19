@@ -1,0 +1,84 @@
+#-------------------oooooOOOOO00000OOOOOooooo---------------------#
+#                                                                 #
+#  D E F I N I T I O N   O F   Y O U R   A C Q U I S I T I O N    #
+#  D I G I T I Z E R   &   C O I N C I D E N C E   S H O R T E R  #
+#                                                                 #
+#-------------------oooooOOOOO00000OOOOOooooo---------------------#
+
+#	   A D D E R
+/gate/digitizer/Singles/insert adder
+
+
+#      E N E R G Y   B L U R R I N G
+/gate/digitizer/Singles/insert                              blurring
+/gate/digitizer/Singles/blurring/setResolution              0.15
+/gate/digitizer/Singles/blurring/setEnergyOfReference       511. keV
+
+/gate/digitizer/Singles/insert pileup
+/gate/digitizer/Singles/pileup/setDepth 4
+/gate/digitizer/Singles/pileup/setPileup  498 ns #300 ns
+
+#      T I M E      R E S O L U T I O N 
+/gate/digitizer/Singles/insert                              timeResolution
+/gate/digitizer/Singles/timeResolution/setTimeResolution    17 ns
+
+
+/gate/digitizer/Singles/insert spblurring
+/gate/digitizer/Singles/spblurring/setSpresolution 5.0 mm
+#/gate/digitizer/Singles/spblurring/verbose 1
+
+
+#       E N E R G Y   C U T
+/gate/digitizer/Singles/insert                              thresholder
+/gate/digitizer/Singles/thresholder/setThreshold            285 keV #200 keV
+/gate/digitizer/Singles/insert                              upholder
+/gate/digitizer/Singles/upholder/setUphold                  1020 keV #1200 keV
+
+
+#       D E A D    T I M E 
+/gate/digitizer/Singles/insert                              deadtime
+/gate/digitizer/Singles/deadtime/setDeadTime               1.07 us # 1.2  us
+/gate/digitizer/Singles/deadtime/setMode                    paralysable
+/gate/digitizer/Singles/deadtime/chooseDTVolume             crystal
+
+
+
+#       E N E R G Y     W I N D O W
+/gate/digitizer/name                                EWindow
+/gate/digitizer/insert                              singleChain
+/gate/digitizer/EWindow/setInputName                Singles
+/gate/digitizer/EWindow/insert                      thresholder
+# 50 % energy window
+/gate/digitizer/EWindow/thresholder/setThreshold    360 keV
+/gate/digitizer/EWindow/insert                      upholder
+/gate/digitizer/EWindow/upholder/setUphold          640 keV
+
+
+#	    C O I N C I D E N C E    S O RT E R 
+/gate/digitizer/Coincidences/setInputName           EWindow
+/gate/digitizer/Coincidences/setWindow              15 ns
+/gate/digitizer/Coincidences/minSectorDifference    1
+/gate/digitizer/Coincidences/describe
+
+/gate/digitizer/Coincidences/MultiplesPolicy takeAllGoods
+
+#/gate/digitizer/name                                delay
+#/gate/digitizer/insert                              coincidenceSorter
+#/gate/digitizer/delay/setInputName                  EWindow
+#/gate/digitizer/delay/setWindow                     15. ns
+#/gate/digitizer/delay/setOffset                     500. ns
+#/gate/digitizer/delay/minSectorDifference    1
+#/gate/digitizer/delay/describe
+#/gate/digitizer/delay/MultiplesPolicy takeWinnerOfGoods
+
+#/gate/digitizer/name                                	finalCoinc
+#/gate/digitizer/insert                              	coincidenceChain
+#/gate/digitizer/finalCoinc/addInputName             	delay
+#/gate/digitizer/finalCoinc/addInputName             	Coincidences
+#/gate/digitizer/finalCoinc/describe
+#/gate/digitizer/finalCoinc/usePriority              	false
+#/gate/digitizer/finalCoinc/insert deadtime
+#/gate/digitizer/finalCoinc/deadtime/setDeadTime		0.0 us # 1.15 us
+#/gate/digitizer/finalCoinc/deadtime/setMode nonparalysable
+
+
