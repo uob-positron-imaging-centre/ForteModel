@@ -17,6 +17,7 @@ repository is create a single place where simulation scripts can be catalogued,
 described, and made available to the public and other researchers.
 
 
+.. image:: pics/ForteVis.png
 
 .. toctree::
    :maxdepth: 2
