@@ -1,0 +1,184 @@
+#  *********************************************************************
+#  * DISCLAIMER                                                        *
+#  *                                                                   *
+#  * Neither the authors of this software system, nor their employing  *
+#  * institutes, nor the agencies providing financial support for this *
+#  * work make any representation or warranty, express or implied,     *
+#  * regarding this software system or assume any liability for its    *
+#  * use.                                                              *
+#  *                                                                   *
+#  * This code implementation is the intellectual property of the      *
+#  * OpenGATE collaboration.                                           *
+#  * By copying, distributing or modifying the Program (or any work    *
+#  * based on the Program) you indicate your acceptance of this        *
+#  * statement, and all its terms.                                     *
+#  *********************************************************************
+#
+
+
+#=====================================================
+# VISUALISATION
+#=====================================================
+
+#/vis/disable
+
+/vis/open                           OGL
+/vis/viewer/reset
+#/vis/viewer/set/viewpointThetaPhi   120 30
+/vis/viewer/set/viewpointThetaPhi 30 30
+/vis/viewer/zoom                    1.1
+/vis/viewer/set/style surface
+/vis/drawVolume
+#/tracking/storeTrajectory           1
+/vis/scene/add/trajectories 
+/vis/scene/endOfEventAction accumulate
+/vis/scene/add/axes
+/vis/viewer/update
+
+/vis/viewer/set/background white
+
+/vis/viewer/set/targetPoint 0 0 0 mm 
+#/vis/viewer/set/lightsVector -1 0.5 1
+
+
+#=====================================================
+# GEOMETRY
+#=====================================================
+
+
+/gate/geometry/setMaterialDatabase    data/GateMaterials.db
+
+
+#
+#     W O R L D
+#
+/gate/world/geometry/setXLength       400. cm
+/gate/world/geometry/setYLength       400. cm
+/gate/world/geometry/setZLength       400. cm
+/gate/world/vis/setVisible 0
+
+
+
+#-------------------oooooOOOOO00000OOOOOooooo---------------------#
+#                                                                 #
+#     D E F I N I T I O N   A N D   D E S C R I T I O N           #
+#        O F   Y O U R   P E T   D E V I C E                      #
+#                                                                 #
+#-------------------oooooOOOOO00000OOOOOooooo---------------------#
+
+
+#     E C A T
+/gate/world/daughters/name ecat
+/gate/world/daughters/insert cylinder
+/gate/ecat/setMaterial Air
+/gate/ecat/geometry/setRmax 44.2 cm
+/gate/ecat/geometry/setRmin 41.2 cm
+/gate/ecat/geometry/setHeight 15.52 cm
+/gate/ecat/vis/forceWireframe
+/gate/ecat/vis/setVisible 0
+
+
+#     B L O C K
+/gate/ecat/daughters/name block
+/gate/ecat/daughters/insert box
+/gate/block/placement/setTranslation 427.0 0.0 0.0 mm
+/gate/block/geometry/setXLength 30.0 mm
+/gate/block/geometry/setYLength 35.8594 mm
+/gate/block/geometry/setZLength 38.7 mm
+/gate/block/setMaterial Air
+/gate/block/vis/forceWireframe
+/gate/block/vis/setColor red
+/gate/block/vis/setVisible 1
+
+
+#	C R Y S T A L
+/gate/block/daughters/name crystal
+/gate/block/daughters/insert box
+/gate/crystal/geometry/setXLength 30.0 mm
+/gate/crystal/geometry/setYLength 4.4 mm
+/gate/crystal/geometry/setZLength 4.75 mm
+/gate/crystal/setMaterial BGO
+/gate/crystal/vis/setColor yellow
+/gate/crystal/vis/forceSolid
+/gate/crystal/vis/setVisible 1
+
+
+
+#	R E P E A T    C R Y S T A L
+/gate/crystal/repeaters/insert cubicArray
+/gate/crystal/cubicArray/setRepeatNumberX 1
+/gate/crystal/cubicArray/setRepeatNumberY 8
+/gate/crystal/cubicArray/setRepeatNumberZ 8
+/gate/crystal/cubicArray/setRepeatVector 0. 4.4942 4.85 mm
+
+
+#	R E P E A T    BLOCK
+/gate/block/repeaters/insert linear
+/gate/block/linear/setRepeatNumber 4
+/gate/block/linear/setRepeatVector 0. 0. 38.8 mm
+/gate/block/repeaters/insert ring
+/gate/block/ring/setRepeatNumber 72
+
+
+#      T U N G S T E N    S H I E L D 
+/gate/world/daughters/name   carter
+/gate/world/daughters/insert cylinder
+/gate/carter/setMaterial Air
+/gate/carter/geometry/setRmax   44.  cm
+/gate/carter/geometry/setRmin   28.  cm
+/gate/carter/geometry/setHeight 9. cm
+/gate/carter/placement/setTranslation 0.0 0.0 12.5 cm
+/gate/carter/vis/forceWireframe
+/gate/carter/vis/setVisible 1
+
+/gate/carter/daughters/name carter1
+/gate/carter/daughters/insert cylinder
+/gate/carter1/setMaterial Tungsten
+/gate/carter1/geometry/setRmax 30.0 cm
+/gate/carter1/geometry/setRmin 29.0 cm
+/gate/carter1/geometry/setHeight 3.0 cm
+/gate/carter1/vis/setColor grey
+/gate/carter1/placement/setTranslation 0.0 0.0 -3 cm
+/gate/carter1/vis/forceWireframe
+/gate/carter1/vis/setVisible 1
+
+/gate/carter/daughters/name carter2
+/gate/carter/daughters/insert cylinder
+/gate/carter2/setMaterial Tungsten
+/gate/carter2/geometry/setRmax 40.7 cm
+/gate/carter2/geometry/setRmin 30.0 cm
+/gate/carter2/geometry/setHeight 1.0 cm
+/gate/carter2/vis/setColor grey
+/gate/carter2/placement/setTranslation 0.0 0.0 -2 cm
+/gate/carter2/vis/forceWireframe
+/gate/carter2/vis/setVisible 1
+
+/gate/carter/daughters/name carter3
+/gate/carter/daughters/insert cylinder
+/gate/carter3/setMaterial Tungsten
+/gate/carter3/geometry/setRmax 40.7 cm
+/gate/carter3/geometry/setRmin 39.7 cm
+/gate/carter3/geometry/setHeight 3.0 cm
+/gate/carter3/vis/setColor grey
+/gate/carter3/placement/setTranslation 0.0 0.0 0.0 cm
+/gate/carter3/vis/forceWireframe
+/gate/carter3/vis/setVisible 1
+
+/gate/carter/daughters/name carter4
+/gate/carter/daughters/insert cylinder
+/gate/carter4/setMaterial Tungsten
+/gate/carter4/geometry/setRmax 43.7 cm
+/gate/carter4/geometry/setRmin 40.7 cm
+/gate/carter4/geometry/setHeight 1.0 cm
+/gate/carter4/vis/setColor grey
+/gate/carter4/placement/setTranslation 0.0 0.0 1 cm
+/gate/carter4/vis/forceWireframe
+/gate/carter4/vis/setVisible 1
+
+#     A T T A C H    S Y S T E M 
+/gate/systems/ecat/block/attach block
+/gate/systems/ecat/crystal/attach crystal
+
+#	A T T A C H    C R Y S T A L  SD
+/gate/crystal/attachCrystalSD
+
